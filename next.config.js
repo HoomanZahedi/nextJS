@@ -1,4 +1,18 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
 
-module.exports = nextConfig
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.versland.io",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "media.istockphoto.com",
+        pathname: "/id/**",
+      },
+    ],
+  },
+};

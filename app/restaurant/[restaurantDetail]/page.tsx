@@ -20,7 +20,6 @@ const fetchResDetails = async (param: any) => {
 
 async function RestaurantDetail(props: any) {
   const resDetails = await fetchResDetails(props);
-  console.log(resDetails);
   return (
     <div className=" p-12">
       {resDetails ? (
