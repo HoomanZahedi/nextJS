@@ -2,7 +2,8 @@
 import React, { useEffect } from "react";
 import { useForm, useFieldArray, FieldErrors } from "react-hook-form";
 // import { DevTool } from "@hookform/devtools";
-
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 type FormData = {
   FirstName: string;
   LastName: string;
@@ -13,6 +14,15 @@ type FormData = {
     number: string;
   }[];
 };
+
+const schema = z.object({
+  FirstName: z.string().nonempty("first name is required"),
+  LastName: z.string().nonempty("last name is required"),
+  Email: z.string().nonempty("email is required").email("invalid email format"),
+  date: z.date(),
+  age: z.number().nonnegative("invalid age"),
+  phoneNumber: z.string(),
+});
 function FormTemplate() {
   const form = useForm<FormData>({
     defaultValues: async () => {
@@ -33,6 +43,8 @@ function FormTemplate() {
         ],
       };
     },
+    resolver: zodResolver(schema),
+    mode: "onBlur",
   });
   const {
     register,
@@ -95,7 +107,7 @@ function FormTemplate() {
               First Name
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               id="grid-first-name"
               type="text"
               placeholder="Jane"
